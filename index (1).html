@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ted Gaturu — Junior Gameplay Programmer</title>
+  <meta name="description" content="Junior Gameplay Programmer based in Nairobi, Kenya. Building games under Teganjo Studios." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #C9A227;
+      --gold-dim: #8B6914;
+      --black: #090909;
+      --surface: #111111;
+      --surface-2: #1A1A1A;
+      --border: #222222;
+      --text: #F0F0F0;
+      --text-2: #888888;
+      --text-3: #555555;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      background: rgba(9,9,9,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-name {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      line-height: 1.0;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-name span { color: var(--gold); }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1rem, 3vw, 1.4rem);
+      color: var(--text-2);
+      letter-spacing: 0.06em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.75rem 1.5rem;
+      background: var(--gold);
+      color: var(--black);
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-primary:hover { background: #d4a82a; transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 0.14em;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      color: var(--text);
+      margin-bottom: 3rem;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .project-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-2px);
+    }
+
+    .project-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: var(--surface-2);
+    }
+
+    .project-img-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--surface-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+    }
+
+    .project-body {
+      padding: 1.5rem;
+    }
+
+    .project-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      background: rgba(201, 162, 39, 0.08);
+      border: 1px solid rgba(201, 162, 39, 0.2);
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+    }
+
+    .project-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-built {
+      font-size: 13px;
+      color: var(--text-3);
+      margin-bottom: 1.25rem;
+    }
+
+    .project-built strong {
+      color: var(--text-2);
+    }
+
+    .project-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .project-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      padding-bottom: 1px;
+    }
+
+    .project-link:hover { border-color: var(--gold); }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .skill-category {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .skill-list li {
+      font-size: 14px;
+      color: var(--text-2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-list li::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .about-photo {
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      display: block;
+    }
+
+    .about-photo-placeholder {
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .about-text p {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    /* ── CONTACT ── */
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+    }
+
+    .footer-text {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+      .hero { padding: 7rem 1rem 3rem; }
+      section { padding: 4rem 1rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-photo, <img src="images/ted.jpg" alt="Ted Gaturu" class="about-photo" /> { width: 100px; height: 100px; }
+      .hero-stats { gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">TGN</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">// NAIROBI, KENYA — TEGANJO STUDIOS</p>
+    <h1 class="hero-name">Ted<br/><span>Gaturu.</span></h1>
+    <p class="hero-title">Junior Gameplay Programmer</p>
+    <p class="hero-desc">
+      I build games from scratch — physics, collision, state machines, and the small details
+      that make a game feel alive. Currently studying Gaming Animation Technology at KCA University
+      and shipping games under Teganjo Studios.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View My Games</a>
+      <a href="https://ted-gaturu.itch.io" target="_blank" rel="noopener" class="btn-secondary">itch.io →</a>
+      <a href="https://github.com/Ted-George" target="_blank" rel="noopener" class="btn-secondary">GitHub →</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-value">4</div>
+        <div class="stat-label">GAMES SHIPPED</div>
+      </div>
+      <div>
+        <div class="stat-value">2</div>
+        <div class="stat-label">ENGINES</div>
+      </div>
+      <div>
+        <div class="stat-value">3+</div>
+        <div class="stat-label">MONTHS BUILDING</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-eyebrow">// SHIPPED GAMES</p>
+    <h2 class="section-title">What I've Built</h2>
+
+    <div class="projects-grid">
+
+      <!-- Breakout -->
+      <div class="project-card">
+        <img src="screenshots/breakout.png" alt="Breakout" class="project-img" />
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">LÖVE2D</span>
+            <span class="tag">Lua</span>
+            <span class="tag">CS50</span>
+          </div>
+          <h3 class="project-title">Breakout</h3>
+          <p class="project-desc">
+            A full Breakout remake built from scratch following Harvard's CS50 Game Development course.
+            Features a spritesheet-based rendering system using Quads, a particle explosion system on brick
+            destruction, a complete state machine architecture, and a persistent file-based high score system
+            — a feature the original CS50 project left unimplemented.
+          </p>
+          <p class="project-built">
+            <strong>What I built:</strong> Ball physics and bounce angle calculation based on paddle velocity,
+            AABB collision with penetration depth correction, tier-based brick damage system,
+            level generation with randomised patterns, and file I/O for persistent leaderboards.
+          </p>
+          <div class="project-links">
+            <a href="https://ted-gaturu.itch.io/breakout" target="_blank" class="project-link">Play on itch.io →</a>
+            <a href="https://github.com/Ted-George/tgn-breakout" target="_blank" class="project-link">View Code →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flappy Bird -->
+      <div class="project-card">
+        <img src="screenshots/flappybird.png" alt="Flappy Bird" class="project-img" />
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">LÖVE2D</span>
+            <span class="tag">Lua</span>
+          </div>
+          <h3 class="project-title">Flappy Bird</h3>
+          <p class="project-desc">
+            A complete Flappy Bird clone built in LÖVE2D with custom assets. Implements
+            two-layer parallax scrolling using modulo-based infinite scroll, frame-rate
+            independent movement with delta time, and AABB collision detection between
+            the bird and dynamically spawned pipes.
+          </p>
+          <p class="project-built">
+            <strong>What I built:</strong> Infinite background and ground scroll using the modulo operator,
+            gravity and flap physics tuned by feel, random pipe gap generation,
+            bird rotation based on velocity, three game states (title, playing, game over).
+          </p>
+          <div class="project-links">
+            <a href="https://ted-gaturu.itch.io/flappybird" target="_blank" class="project-link">Play on itch.io →</a>
+            <a href="https://github.com/Ted-George/tgn-flappybird" target="_blank" class="project-link">View Code →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Wizard -->
+      <div class="project-card">
+        <img src="screenshots/thewizard.png" alt="The Wizard" class="project-img" />
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Godot 4</span>
+            <span class="tag">GDScript</span>
+          </div>
+          <h3 class="project-title">The Wizard</h3>
+          <p class="project-desc">
+            A top-down arcade collector built in Godot 4. The player collects potions against
+            a 30-second countdown timer, with potions respawning at random screen positions on collection.
+            My first completed Godot project — built to learn the engine's node system, Area2D
+            physics, and signal-based collision detection.
+          </p>
+          <p class="project-built">
+            <strong>What I built:</strong> CharacterBody2D player with dynamic boundary clamping,
+            Area2D coin scenes with collision signals, preload-based scene instantiation,
+            Timer node with game over transition, call_deferred fix for physics callback spawning.
+          </p>
+          <div class="project-links">
+            <a href="https://ted-gaturu.itch.io/the-wizard" target="_blank" class="project-link">Play on itch.io →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pong -->
+      <div class="project-card">
+        <img src="screenshots/pong.png" alt="Pong" class="project-img" />
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">LÖVE2D</span>
+            <span class="tag">Lua</span>
+            <span class="tag">CS50</span>
+          </div>
+          <h3 class="project-title">Pong</h3>
+          <p class="project-desc">
+            A Pong remake built as part of Harvard's CS50 Game Development course. Implements
+            two-player gameplay and a simple AI opponent. My first complete game — where I learned
+            delta time movement, AABB collision, and the fundamentals of a game loop.
+          </p>
+          <p class="project-built">
+            <strong>What I built:</strong> Frame-rate independent paddle and ball movement,
+            AABB collision detection, ball angle variation on paddle hit,
+            AI opponent with deliberate error margin to keep gameplay fair.
+          </p>
+          <div class="project-links">
+            <a href="https://ted-gaturu.itch.io/pong" target="_blank" class="project-link">Play on itch.io →</a>
+            <a href="https://github.com/Ted-George/tgn-pong" target="_blank" class="project-link">View Code →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-eyebrow">// TECHNICAL SKILLS</p>
+    <h2 class="section-title">What I Work With</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <p class="skill-category">LANGUAGES</p>
+        <ul class="skill-list">
+          <li>Lua</li>
+          <li>GDScript</li>
+          <li>C (CS50)</li>
+          <li>Python (CS50P)</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <p class="skill-category">ENGINES & FRAMEWORKS</p>
+        <ul class="skill-list">
+          <li>Godot 4</li>
+          <li>LÖVE2D</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <p class="skill-category">GAMEPLAY SYSTEMS</p>
+        <ul class="skill-list">
+          <li>Physics & collision (AABB)</li>
+          <li>State machines</li>
+          <li>Particle systems</li>
+          <li>Infinite scrolling</li>
+          <li>File I/O & persistence</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <p class="skill-category">TOOLS</p>
+        <ul class="skill-list">
+          <li>Git & GitHub</li>
+          <li>VSCode</li>
+          <li>Krita</li>
+          <li>Blender (learning)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-eyebrow">// ABOUT ME</p>
+    <h2 class="section-title">Who I Am</h2>
+    <div class="about-grid">
+      <img src="images/ted.jpg" alt="Ted Gaturu" class="about-photo" />
+      <div class="about-text">
+        <p>
+          I'm Ted Gaturu, a Year 2 BSc Gaming Animation Technology student at KCA University in Nairobi, Kenya.
+          I build games under my studio brand <strong style="color: var(--gold);">Teganjo Studios (TGN)</strong> —
+          targeting a career as a Junior Gameplay Programmer with a long-term goal of building
+          a financially sustainable, remote-first game studio.
+        </p>
+        <p>
+          I got into game dev because I wanted to understand how the things I played actually worked.
+          That curiosity drives how I learn — I type every line of code by hand, understand every
+          system before moving forward, and build things I can explain in full. I use AI tools like
+          Claude to accelerate learning, not replace understanding.
+        </p>
+        <p>
+          Outside of game dev, I work at my family's hardware shop most of the week —
+          which means everything in this portfolio was built in early mornings, late evenings,
+          and Sundays. Shipped under real constraints.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-eyebrow">// GET IN TOUCH</p>
+    <h2 class="section-title">Let's Work Together</h2>
+    <p style="color: var(--text-2); font-size: 15px; margin-bottom: 2rem; max-width: 480px; line-height: 1.75;">
+      I'm open to junior gameplay programmer roles and internships — remote or based in Nairobi.
+      If you're building something and need someone who ships, reach out.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:gaturuted116@gmail.com" class="btn-primary">Send an Email</a>
+      <a href="https://github.com/Ted-George" target="_blank" rel="noopener" class="btn-secondary">GitHub</a>
+      <a href="https://ted-gaturu.itch.io" target="_blank" rel="noopener" class="btn-secondary">itch.io</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">TEGANJO STUDIOS</span>
+      <span class="footer-text">Built in Nairobi. Going global.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
